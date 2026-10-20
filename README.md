@@ -51,7 +51,7 @@ python prune_finetune.py \
   --score_metric mse
 ```
 
-Use the same image folder and resolution for training, pruning and rendering; for example, `-r 4` for an outdoor Mip-NeRF 360 scene or `-r 1` for Train. An existing 30K-iteration model can also be supplied with `--start_pointcloud`.
+Use the same image folder and resolution for training, pruning and rendering; for example, `-r 4` for an outdoor Mip-NeRF 360 scene. An existing 30K-iteration model can also be supplied with `--start_pointcloud`.
 
 The default pipeline:
 
@@ -74,7 +74,7 @@ Select the objective with `--score_metric` in `prune_finetune.py`:
 
 For LPIPS or SSIM pruning, replace `--score_metric mse` in the command above with `--score_metric lpips` or `--score_metric ssim` and choose a corresponding output directory with `-m`.
 
-All objectives use the same signed metric-aware score and `torch.autograd.grad` VJPs. Defaults are 64 normalized Rademacher probes, target opacity `1e-4`, and log-scale displacement `-3`. Opacity edits use activated-opacity space. Gaussians with the lowest scores are pruned.
+All objectives use the same signed metric-aware score and `torch.autograd.grad` VJPs. Defaults are 64 normalized Rademacher probes, target opacity `1e-4`, and log-scale displacement `-3`. Gaussians with the lowest scores are pruned.
 
 Use `--start_checkpoint` instead of `--start_pointcloud` for a compatible PUP checkpoint. When loading a PLY from a custom directory, pass its starting iteration explicitly with `--first_iter`.
 
@@ -96,7 +96,7 @@ python prune_finetune.py \
   --score_metric clip --prune_only
 ```
 
-The pruning command removes 90% of the input Gaussians. For the MSE comparison, repeat it with `--score_metric mse` and `-m output/Train_mse`. Change `--prune_percent` to use another removal fraction. Pretrained CLIP and VGG weights are downloaded on first use when they are not already cached.
+The pruning command removes 90% of the input Gaussians. For the MSE comparison, repeat it with `--score_metric mse` and `-m output/Train_mse`. Change `--prune_percent` to use another removal fraction. 
 
 ### Rendering and Evaluation
 
@@ -106,7 +106,7 @@ python render.py -s /path/to/dataset/garden -r 4 -m output/garden_mse \
 python metrics.py --model_paths output/garden_mse
 ```
 
-Image quality metrics are saved to `output/garden_mse/results.json`. For the CLIP example, use the Train dataset, `-r 1`, `-m output/Train_clip` and `--iteration 30001` instead.
+Image quality metrics are saved to `output/garden_mse/results.json`. 
 
 ## BibTeX
 
